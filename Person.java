@@ -2,7 +2,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person extends Client implements Serializable {
+public class Person extends Client{
     private String name, surname, PESEL;
     public Person(int phoneNumber, String email, String name, String surname, String PESEL) {
         super(phoneNumber, email);

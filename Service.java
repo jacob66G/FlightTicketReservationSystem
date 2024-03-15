@@ -7,12 +7,6 @@ public class Service implements Serializable {
     private List<Flight> flights;
     private List<Airport> airports;
 
-    public Service(List<Client> clients, List<Flight> flights, List<Airport> airports) {
-        this.clients = clients;
-        this.flights = flights;
-        this.airports = airports;
-    }
-
     public Service(){
         flights = new ArrayList<>();
         clients = new ArrayList<>();
@@ -26,6 +20,7 @@ public class Service implements Serializable {
     public List<Client> getClients() {
         return clients;
     }
+
     public void addFlight(Flight flight){
         flights.add(flight);
     }
@@ -35,6 +30,7 @@ public class Service implements Serializable {
     public List<Flight> getFlights() {
         return flights;
     }
+
     public void addAirport(Airport airport){airports.add(airport);}
     public void removeAirport(Airport airport){airports.remove(airport);}
     public List<Airport> getAirports(){ return airports; }

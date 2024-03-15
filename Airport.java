@@ -5,13 +5,13 @@ import java.util.List;
 public class Airport implements Serializable {
     private String code, cityName;
     private List<Runway> runways;
-    private Cordinates cordinates;
+    private Coordinates coordinates;
     private int numberOfgates;
 
-    public Airport(String cityName, String code, Cordinates cordinates) {
+    public Airport(String cityName, String code, Coordinates coordinates) {
         this.cityName =cityName;
         this.code = code;
-        this.cordinates = cordinates;
+        this.coordinates = coordinates;
         this.runways = new ArrayList<>();
     }
 
@@ -28,12 +28,12 @@ public class Airport implements Serializable {
         this.code = code;
     }
 
-    public Cordinates getCordinates() {
-        return cordinates;
+    public Coordinates getCordinates() {
+        return coordinates;
     }
 
-    public void setCordinates(Cordinates cordinates) {
-        this.cordinates = cordinates;
+    public void setCordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 
     public int getNumberOfgates() {
@@ -53,12 +53,19 @@ public class Airport implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("Airport Code: ").append(code).append("\n");
         sb.append("City Name: ").append(cityName).append("\n");
-        sb.append("Coordinates: ").append(cordinates).append("\n");
+        sb.append("Coordinates: ").append(coordinates).append("\n");
         sb.append("Number of Gates: ").append(numberOfgates).append("\n");
         sb.append("Runways: \n");
         for (Runway runway : runways) {
             sb.append("  - ").append(runway).append("\n");
         }
+        return sb.toString();
+    }
+
+    public String displayBasicInf(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Airport Code: ").append(code).append("\n");
+        sb.append("City Name: ").append(cityName).append("\n");
         return sb.toString();
     }
 }

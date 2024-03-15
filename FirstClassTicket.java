@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-public class FirstClassTicket extends Ticket implements Serializable {
+public class FirstClassTicket extends Ticket {
     public FirstClassTicket(Flight flight) {
         super(flight);
     }

@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-public class EconomyTicket extends Ticket implements Serializable {
+public class EconomyTicket extends Ticket {
     private double price;
     public EconomyTicket(Flight flight) {
         super(flight);

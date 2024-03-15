@@ -14,10 +14,10 @@ public class Route  implements Serializable {
     }
 
     public double calculateDistance(Airport departureAirport, Airport arrivalAirport){
-        int x1 = departureAirport.getCordinates().getX();
-        int y1 = departureAirport.getCordinates().getY();
-        int x2 = arrivalAirport.getCordinates().getX();
-        int y2 = arrivalAirport.getCordinates().getY();
+        double x1 = departureAirport.getCordinates().getX();
+        double y1 = departureAirport.getCordinates().getY();
+        double x2 = arrivalAirport.getCordinates().getX();
+        double y2 = arrivalAirport.getCordinates().getY();
         return Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2));
     }
 

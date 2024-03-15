@@ -1,303 +1,377 @@
 import java.io.IOException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-        boolean exit = true;
-        Service service;
+        Service service = new Service();
 
-        if (Serializer.checkFile()) {
+        List<Flight> flights = new ArrayList<>();
+        List<Airport> airports = new ArrayList<>();
+        List<Client> clients = new ArrayList<>();
+
+//        if (Serializer.checkFile()) {
+//            service = Serializer.readState();
+//            flights = service.getFlights();
+//            airports = service.getAirports();
+//            clients = service.getClients();
+//        }else {
+//            service = new Service();
+//        }
+
+
+        try{
             service = Serializer.readState();
-        } else {
+            flights = service.getFlights();
+            airports = service.getAirports();
+            clients = service.getClients();
+        } catch (IOException e) {
+        // Obsługa wyjątku IOException (np. plik jest pusty)
+        System.out.println("Plik jest pusty: " + e.getMessage());
+    }
 
-            service = new Service();
-        }
+        boolean exit = true;
         Scanner scanner = new Scanner(System.in);
+
         while (exit) {
-            System.out.println("Choose account type");
-            System.out.println("1) Admin");
-            System.out.println("2) Client");
-            System.out.println("3) Exit");
+            System.out.println("-----CHOOSE ACCOUNT TYPE-----");
+            System.out.println("1  ADMIN");
+            System.out.println("2  CLIENT");
+            System.out.println("3  EXIT");
 
             int accountType = scanner.nextInt();
-            boolean accountAdmin = true;
-            boolean accountClient = true;
+
             switch (accountType) {
 
                 case 1:
                     //-------------------------------------------------ADMIN ACCOUNT PANEAL
+                    boolean accountAdmin = true;
+
                     while (accountAdmin) {
-                        System.out.println("1) Manage flights");
-                        System.out.println("2) Manage airports");
-                        System.out.println("3) Clear Data");
-                        System.out.println("4) Sign out");
+                        System.out.println("1  MANAGE FLIGHTS");
+                        System.out.println("2  MANAGE AIRPORTS");
+                        System.out.println("3  CLEAR DATA");
+                        System.out.println("4  SIGN OUT");
 
                         int adminOptions = scanner.nextInt();
 
                         switch (adminOptions) {
                             case 1:
-                                System.out.println("1) Show avaiable flights");
-                                System.out.println("2) Add new flight");
-                                System.out.println("3) Remove flight");
-                                System.out.println("4) Go back");
+                                boolean manegeFlights = true;
 
-                                int manageflightOption = scanner.nextInt();
+                                while (manegeFlights) {
 
-                                switch (manageflightOption) {
-                                    case 1:
-                                        List<Flight> flights = service.getFlights();
+                                    System.out.println("1  SHOW AVAILABLE FLIGHTS");
+                                    System.out.println("2  ADD NEW FLIGHT");
+                                    System.out.println("3  REMOVE FLIGHT");
+                                    System.out.println("4  GO BACK");
 
-                                        for (Flight flight : flights) {
-                                            System.out.println("\n--------------------------------------------");
-                                           // System.out.println(flight.getRoute().getDepartureAirport().getCityName() + "                 " + flight.getRoute().getArrivalAirport().getCityName());
-                                           // System.out.println(flight.getDepartureDate() + " : " + flight.getDepartureTime() + "   -   " + flight.getArrivalDate() + " : " + flight.getArrivalTime());
-                                           // System.out.println("Flight ID: " + flight.getFlightCode() + "          " + "Plane ID: " + flight.getPlane().getPlaneCode());
-                                            System.out.println(flight);
-                                            System.out.println("--------------------------------------------\n");
-                                        }
-                                        if (flights.isEmpty()) {
-                                            System.out.println("NO FLIGHTS HAVE BEEN ADDED YET");
-                                        }
-                                        break;
-                                    case 2:
-                                        List<Airport> airports = service.getAirports();
-                                        //--------------------------------------------------------------------DEPARTURE AIRPORT INFORMATIONS
-                                        Airport departureAirport = null;
-                                        System.out.println("----------DEPARTURE AIRPORT INFORMATIONS----------");
-                                        System.out.println("CHOOSE DEPARTURE AIRPORT: \n");
-                                        service.showSupportedAirports();
-                                        for(Airport airport : airports ){
-                                            System.out.println(airport);
-                                        }
-                                        System.out.println("\nDEPARTURE AIRPORT CODE: ");
-                                        String departureAirportCode = scanner.next();
-                                        boolean found = false;
-                                        for (Airport airport : airports) {
-                                            if (airport.getCode().equals(departureAirportCode)) {
-                                                departureAirport = airport;
-                                                found = true;
-                                            }
-                                        }
+                                    int manageflightOption = scanner.nextInt();
 
-                                        Runway departureRunnway = null;
-                                        if (found) {
-                                            System.out.println("\n------------------------------\n");
-                                            System.out.println("----------AVAILABLE RUNNWAY----------\n");
-                                            List<Runway> departureRunnways = departureAirport.getRunways();
-
-                                            for (Runway runway : departureRunnways) {
-                                                //System.out.println("RUNNWAY CODE: " + runway.getNumber());
-                                                System.out.println(runway);
-                                            }
-                                            System.out.print("CHOOSE RUNNWAY CODE: ");
-                                            String departureRunnwayCode = scanner.next();
-                                            for (Runway runway : departureRunnways) {
-                                                if (runway.getNumber().equals(departureRunnwayCode)) {
-                                                    departureRunnway = runway;
+                                    switch (manageflightOption) {
+                                        case 1:
+                                            if (flights.isEmpty()) {
+                                                System.out.println("NO FLIGHTS HAVE BEEN ADDED YET");
+                                            }else {
+                                                for (Flight flight : flights) {
+                                                    System.out.println("\n--------------------------------------------");
+                                                    System.out.println(flight);
+                                                    System.out.println("--------------------------------------------\n");
                                                 }
                                             }
-                                            if (departureRunnway == null) {
-                                                System.out.println("Wrong runnway code!");
-                                                break;
+                                            break;
+                                        case 2:
+                                            //--------------------------------------------------------------------DEPARTURE AIRPORT INFORMATIONS
+                                            Airport departureAirport = null;
+                                            Runway departureRunnway = null;
+
+                                            System.out.println("----------DEPARTURE AIRPORT INFORMATIONS----------");
+                                            System.out.println("CHOOSE DEPARTURE AIRPORT: \n");
+
+                                           // service.showSupportedAirports();
+                                            for(Airport airport : airports){
+                                                System.out.println(airport.displayBasicInf());
                                             }
-                                            System.out.println("------------------------------\n");
 
-                                        } else {
-                                            System.out.println("AIRPORT WITH THIS CODE DOES NOT EXIST!");
-                                        }
+                                            System.out.println("\nDEPARTURE AIRPORT CODE: ");
+                                            String departureAirportCode = scanner.next();
 
-                                        System.out.println("------------------------------\n");
-
-                                        //----------------------------------------------------------------------ARRIVAL AIRPORT INFORMATIONS
-                                        Airport arrivalAirport = null;
-                                        System.out.println("----------ARRIVAL AIRPORT INFORMATIONS----------\n");
-                                        System.out.println("CHOOSE ARRIVAL AIRPORT: ");
-                                        //service.showSupportedAirports();
-                                        for(Airport airport : airports){
-                                            System.out.println(airport);
-                                        }
-                                        System.out.println("\nARRIVAL AIRPORT CODE: ");
-                                        String arrivalAirportCode = scanner.next();
-                                        found = false;
-                                        for (Airport airport : airports) {
-                                            if (airport.getCode().equals(arrivalAirportCode)) {
-                                                arrivalAirport = airport;
-                                                found = true;
-                                            }
-                                        }
-                                        Runway arrivalRunnway = null;
-                                        if (found) {
-                                            System.out.println("\n------------------------------\n");
-                                            System.out.println("----------AVAILABLE RUNNWAY----------\n");
-                                            List<Runway> arrivalRunnways = arrivalAirport.getRunways();
-
-                                            for (Runway runway : arrivalRunnways) {
-                                               // System.out.println(runway.getNumber());
-                                                System.out.println(runway);
-                                            }
-                                            System.out.print("CHOOSE RUNNWAY CODE: ");
-                                            String arrivalRunnwayCode = scanner.next();
-
-                                            for (Runway runway : arrivalRunnways) {
-                                                if (runway.getNumber().equals(arrivalRunnwayCode)) {
-                                                    arrivalRunnway = runway;
+                                            for (Airport airport : airports) {
+                                                if (airport.getCode().equals(departureAirportCode)) {
+                                                    departureAirport = airport;
+                                                    break;
                                                 }
                                             }
-                                            if (arrivalRunnway == null) {
-                                                System.out.println("wrong runnway code!");
-                                                break;
+
+                                            if (departureAirport != null) {
+
+                                                System.out.println("----------AVAILABLE RUNNWAY----------\n");
+
+                                                List<Runway> departureRunnways = departureAirport.getRunways();
+
+                                                for (Runway runway : departureRunnways) {
+                                                    System.out.println(runway);
+                                                }
+                                                System.out.print("CHOOSE RUNNWAY CODE: ");
+                                                String departureRunnwayCode = scanner.next();
+                            //Zrobir funkcje
+                                                for (Runway runway : departureRunnways) {
+                                                    if (runway.getNumber().equals(departureRunnwayCode)) {
+                                                        departureRunnway = runway;
+                                                    }
+                                                }
+                                                if (departureRunnway == null) {
+                                                    System.out.println("Wrong runnway code!");
+                                                    break;
+                                                }
+                                                System.out.println("------------------------------\n");
+                            //
+                                            } else {
+                                                System.out.println("AIRPORT WITH THIS CODE DOES NOT EXIST!");
                                             }
 
                                             System.out.println("------------------------------\n");
 
-                                        } else {
-                                            System.out.println("AIRPORT WITH THIS CODE DOES NOT EXIST!");
-                                        }
-                                        Route newRoute = new Route(departureAirport, arrivalAirport, departureRunnway, arrivalRunnway);
+                                            //----------------------------------------------------------------------ARRIVAL AIRPORT INFORMATIONS
 
-                                        //--------------------------------------------------------------------------------PLANE
-                                        System.out.println("----------PLANE INFORMATIONS----------\n");
-                                        System.out.println("------------------------------");
-                                        System.out.println("Set plane code");
-                                        System.out.print("PLANE CODE: ");
-                                        String planeCode = scanner.next();
+                                            Airport arrivalAirport = null;
+                                            Runway arrivalRunnway = null;
 
-                                        System.out.println("Enter number of available seats");
-                                        System.out.print("NUMBER OD SEATS: ");
-                                        int numberOfSeats = scanner.nextInt();
-                                        System.out.println("------------------------------\n");
+                                            System.out.println("----------ARRIVAL AIRPORT INFORMATIONS----------\n");
+                                            System.out.println("CHOOSE ARRIVAL AIRPORT: ");
 
-                                        Plane newPlane = new Plane(planeCode, numberOfSeats);
-                                        //---------------------------------------------------------------------------------DATE
-                                        System.out.println("\n----------DATE INFORMATIONS----------");
-                                        System.out.println("------------------------------");
-                                        System.out.println("Set departure date yyyy-MM-dd");
-                                        String departureDate = scanner.next();
-                                        System.out.println("Set departure time of take-off HH:mm:ss");
-                                        String departureTime = scanner.next();
-                                        System.out.println("\nSet arrival date yyyy-MM-dd");
-                                        String arrivalDate = scanner.next();
-                                        System.out.println("Set arrival time of landing HH:mm:ss");
-                                        String arrivalTime = scanner.next();
-                                        System.out.println("------------------------------\n");
+                                            //service.showSupportedAirports();
+                                            for (Airport airport : airports) {
+                                                if (!airport.getCode().equals(departureAirportCode))
+                                                        System.out.println(airport.displayBasicInf());
+                                            }
 
-                                        //--------------------------------------------------------------------------GATE NUMBER
-                                        System.out.println("\nEnter number of gate:");
-                                        System.out.print("GATE NUMBER:");
-                                        String gateNumber = scanner.next();
+                                            System.out.println("\nARRIVAL AIRPORT CODE: ");
+                                            String arrivalAirportCode = scanner.next();
 
+                                            for (Airport airport : airports) {
+                                                if (airport.getCode().equals(arrivalAirportCode)) {
+                                                    arrivalAirport = airport;
+                                                    break;
+                                                }
+                                            }
 
-                                        System.out.println("\n------------------------------");
+                                            if (arrivalAirport != null) {
 
-                                        System.out.println("NEW FLIGHT IS ADDED");
-                                        Flight newFlight = new Flight(newRoute, newPlane, departureDate, arrivalDate, departureTime, arrivalTime, gateNumber);
-                                        service.addFlight(newFlight);
-                                        System.out.println("------------------------------\n");
-                                        break;
+                                                System.out.println("\n------------------------------\n");
+                                                System.out.println("----------AVAILABLE RUNNWAY----------\n");
 
-                                    case 3:
-                                        // usuwanie lotu po id
-                                        break;
-                                    case 4:
-                                        break;
-                                    default:
-                                        System.out.println("Wrong choice!");
-                                        break;
+                                                List<Runway> arrivalRunnways = arrivalAirport.getRunways();
+
+                                                for (Runway runway : arrivalRunnways) {
+                                                    System.out.println(runway);
+                                                }
+
+                                                System.out.print("CHOOSE RUNNWAY CODE: ");
+                                                String arrivalRunnwayCode = scanner.next();
+                                //zrobic funkcje
+                                                for (Runway runway : arrivalRunnways) {
+                                                    if (runway.getNumber().equals(arrivalRunnwayCode)) {
+                                                        arrivalRunnway = runway;
+                                                    }
+                                                }
+                                                if (arrivalRunnway == null) {
+                                                    System.out.println("wrong runnway code!");
+                                                    break;
+                                                }
+
+                                                System.out.println("------------------------------\n");
+
+                                            } else {
+                                                System.out.println("AIRPORT WITH THIS CODE DOES NOT EXIST!");
+                                            }
+
+                                            Route newRoute = new Route(departureAirport, arrivalAirport, departureRunnway, arrivalRunnway);
+
+                                            //--------------------------------------------------------------------------------PLANE
+                                            System.out.println("----------PLANE INFORMATIONS----------\n");
+                                            System.out.println("SET PLANE CODE");
+                                            System.out.print("PLANE CODE: ");
+                                            String planeCode = scanner.next();
+
+                                            System.out.println("ENTER NUMBER OF AVAILABLE SEATS");
+                                            System.out.print("NUMBER OD SEATS: ");
+                                            int numberOfSeats = scanner.nextInt();
+                                            System.out.println("------------------------------\n");
+
+                                            Plane newPlane = new Plane(planeCode, numberOfSeats);
+                                            //---------------------------------------------------------------------------------DATE
+                                            System.out.println("\n----------DATE INFORMATIONS----------");
+                                            System.out.println("Set departure date yyyy-MM-dd");
+                                            String departureDate = scanner.next();
+                                            System.out.println("Set departure time of take-off HH:mm:ss");
+                                            String departureTime = scanner.next();
+                                            System.out.println("\nSet arrival date yyyy-MM-dd");
+                                            String arrivalDate = scanner.next();
+                                            System.out.println("Set arrival time of landing HH:mm:ss");
+                                            String arrivalTime = scanner.next();
+                                            System.out.println("------------------------------\n");
+
+                                            //--------------------------------------------------------------------------GATE NUMBER
+                                            System.out.println("\nEnter number of gate:");
+                                            System.out.print("GATE NUMBER:");
+                                            String gateNumber = scanner.next();
+
+                                            System.out.println("\n------------------------------");
+
+                                            System.out.println("NEW FLIGHT IS ADDED");
+                                            Flight newFlight = new Flight(newRoute, newPlane, departureDate, arrivalDate, departureTime, arrivalTime, gateNumber);
+                                            service.addFlight(newFlight);
+                                            System.out.println("------------------------------\n");
+                                            break;
+
+                                        case 3:
+                                            // usuwanie lotu po id
+                                            break;
+                                        case 4:
+                                            manegeFlights = false;
+                                            break;
+                                        default:
+                                            System.out.println("Wrong choice!");
+                                            break;
+                                    }
                                 }
                                 break;
                             case 2:
-                                System.out.println("----------SUPPORTED AIRPORTS----------\n");
-                                //service.showSupportedAirports();
-                                List<Airport> airports1 = service.getAirports();
-                                for (Airport airport : airports1) {
-                                   // System.out.println("AIRPORT CODE: " + airport.getCode() + "CITY: " + airport.getCityName());
-                                    System.out.println(airport);
-                                }
-                                if (airports1.isEmpty()) {
-                                    System.out.println("ANY AIRPORT IS AVAILABLE");
-                                }
-                                System.out.println("\n----------------------------------");
-                                System.out.println("\n1) Add new airports");
-                                System.out.println("2) Remove airports");
-                                System.out.println("3) Go back\n");
-                                System.out.println("----------------------------------\n");
-                                int airportOption = scanner.nextInt();
+                                boolean manageAirports = true;
 
-                                switch (airportOption) {
-                                    case 1:
+                                while (manageAirports) {
+                                    System.out.println("----------SUPPORTED AIRPORTS----------\n");
+                                    //service.showSupportedAirports();
 
-                                        System.out.println("----------Set airport city----------");
-                                        System.out.print("CITY: ");
-                                        String cityName = scanner.next();
-                                        System.out.println("-------Set airports cordinates-------");
-                                        System.out.print("X: ");
-                                        int x = scanner.nextInt();
-                                        System.out.print("Y: ");
-                                        int y = scanner.nextInt();
-                                        Cordinates cordinates = new Cordinates(x, y);
-                                        System.out.println("------------------------------\n");
-                                        System.out.println("----------Set airport code-----------");
-                                        System.out.println("AIRPORT CODE");
-                                        String airportCode = scanner.next();
+                                    for (Airport airport : airports) {
+                                        // System.out.println("AIRPORT CODE: " + airport.getCode() + "CITY: " + airport.getCityName());
+                                        System.out.println(airport);
+                                    }
+                                    if (airports.isEmpty()) {
+                                        System.out.println("ANY AIRPORT IS AVAILABLE");
+                                    }
 
-                                        Airport airport = new Airport(cityName, airportCode, cordinates);
-                                        service.addAirport(airport);
+                                    System.out.println("\n1  ADD NEW AIRPORT");
+                                    System.out.println("2  REMOVE AIRPORT");
+                                    System.out.println("3  GO BACK");
+
+                                    int airportOption = scanner.nextInt();
+
+                                    switch (airportOption) {
+                                        case 1:
+
+                                            System.out.println("----------SET AIRPORT CITY----------");
+                                            AirportDataBase airportDataBase = new AirportDataBase();
+
+                                            Map<String, List<AirportDataBase.City>> airportLocation = airportDataBase.getAirportLocation();
+
+                                            for(String key : airportLocation.keySet()){
+                                                System.out.println(key);
+                                            }
+                                            System.out.print("COUNTRY: ");
+                                            String countryName = scanner.next();
+
+                                            //sprawdzic czy jest
+
+                                            List<AirportDataBase.City> cityList = airportLocation.get(countryName);
+
+                                            for(AirportDataBase.City city : cityList){
+                                                System.out.println(city.getCity());
+                                            }
+
+                                            AirportDataBase.City selectedCity = null;
+                                            System.out.print("CITY: ");
+                                            String cityName = scanner.next();
+
+                                            for(AirportDataBase.City city : cityList){
+                                               if(city.getCity().equals(cityName)){
+                                                   selectedCity = city;
+                                                   break;
+                                               }
+                                            }
+
+                                            //sprawdzic czy jest
+
+//                                            System.out.println("-------SET AIRPORT COORDINATES-------");
+//                                            System.out.print("X: ");
+//                                            int x = scanner.nextInt();
+//                                            System.out.print("Y: ");
+//                                            int y = scanner.nextInt();
+//                                            Coordinates coordinates = new Coordinates(x, y);
 
 
-                                        System.out.println("------------------------------\n");
-                                        System.out.println("Set number of runnways at this airport");
 
-                                        System.out.print("NUMBER OF RUNNWAYS: ");
-                                        int numberOfrunnways = scanner.nextInt();
-                                        for (int n = 1; n <= numberOfrunnways; n++) {
-                                            System.out.println("Set informations about " + n + " runnway:");
-                                            System.out.print("RUNNWAY CODE: ");
-                                            String runnwayCode = scanner.next();
-                                            Runway runway = new Runway(runnwayCode);
-                                            airport.addRunway(runway);
+                                            System.out.println("----------SET AIRPORT CODE-----------");
+                                            System.out.println("AIRPORT CODE");
+                                            String airportCode = scanner.next();
 
-                                        }
-                                        System.out.println("A NEW AIRPORT HAS BEEN ADDED");
-                                        System.out.println("------------------------------\n");
-                                        break;
-                                    case 2:
-                                        service.showSupportedAirports();
-                                        System.out.println("1) DELETE AIRPORT BY AIRPORT CODE");
-                                        System.out.println("2) GO BACK");
-                                        int option = scanner.nextInt();
+                                            Airport airport = new Airport(cityName, airportCode, selectedCity.getCoordinates());
+                                            service.addAirport(airport);
 
-                                        switch (option) {
-                                            case 1:
-                                                System.out.print("AIRPOT CODE: ");
-                                                String airportCodeToDelete = scanner.next();
-                                                List<Airport> airports = service.getAirports();
-                                                for (Airport airport1 : airports) {
-                                                    if (airport1.getCode().equals(airportCodeToDelete)) {
-                                                        service.removeAirport(airport1);
-                                                        System.out.println("AIPORT DELETED SUCCESSFULY");
-                                                        break;
+                                            System.out.println("---SET NUMBER OF AVAILABLE RUNNWAYS---");
+
+                                            System.out.print("NUMBER OF RUNNWAYS: ");
+                                            int numberOfrunnways = scanner.nextInt();
+                                            for (int n = 1; n <= numberOfrunnways; n++) {
+                                                System.out.print(n + " RUNNWAY CODE: ");
+                                                String runnwayCode = scanner.next();
+                                                Runway runway = new Runway(runnwayCode);
+                                                airport.addRunway(runway);
+
+                                            }
+                                            System.out.println("A NEW AIRPORT HAS BEEN ADDED");
+                                            System.out.println("------------------------------\n");
+                                            break;
+                                        case 2:
+                                            service.showSupportedAirports();
+                                            System.out.println("1  DELETE AIRPORT BY AIRPORT CODE");
+                                            System.out.println("2  GO BACK");
+                                            int option = scanner.nextInt();
+
+                                            switch (option) {
+                                                case 1:
+                                                    System.out.print("AIRPOT CODE: ");
+                                                    String airportCodeToDelete = scanner.next();
+
+                                                    for (Airport airport1 : airports) {
+                                                        if (airport1.getCode().equals(airportCodeToDelete)) {
+                                                            service.removeAirport(airport1);
+                                                            System.out.println("AIPORT DELETED SUCCESSFULY");
+                                                            break;
+                                                        }
                                                     }
-                                                }
-                                                System.out.println("AIRPORT WITH THIS AIRPORT CODE DOES NOT EXIST");
-                                                break;
-                                            case 2:
-                                                break;
-                                            default:
-                                                System.out.println("Wrong option!");
-                                                break;
-                                        }
+                                                    System.out.println("AIRPORT WITH THIS AIRPORT CODE DOES NOT EXIST");
+                                                    break;
+                                                case 2:
+                                                    break;
+                                                default:
+                                                    System.out.println("WRONG OPTION");
+                                                    break;
+                                            }
+                                    }
                                 }
                                 break;
                             case 3:
-                                Serializer.clearData();
-                                break;
+
+                                while (true) {
+                                    System.out.println("ARE YOU SURE YOU WANT TO DELETE THE DATA?\nDATA OF AIRPORTS, FLIGHTS AND CLIENTS WILL BE DELETED\n(YES/NO)");
+                                    String deleteData = scanner.next();
+                                    if (deleteData.equalsIgnoreCase("yes")) {
+                                        Serializer.clearData();
+                                        break;
+                                    } else if (deleteData.equalsIgnoreCase("no")){
+                                        break;
+                                    }
+                                    else {
+                                        System.out.println("WRONG OPTION");
+                                    }
+                                }
                             case 4:
                                 accountAdmin = false;
                                 break;
                             default:
-                                System.out.println("Wrong choice!");
+                                System.out.println("WRONG OPTION");
                                 break;
                         }
                     }
@@ -305,10 +379,13 @@ public class Main {
 
                 case 2:
                     //---------------------------------------------------------CLIENT ACCOUNT PANEL
+                    boolean accountClient = true;
+
                     while (accountClient) {
-                        System.out.println("1) Create an account");
-                        System.out.println("2) Log on");
-                        System.out.println("3) Exit");
+
+                        System.out.println("1  CREATE AN ACCOUNT");
+                        System.out.println("2  LOG ON");
+                        System.out.println("3  EXIT");
 
                         int clientOption = scanner.nextInt();
 
@@ -326,7 +403,9 @@ public class Main {
                                 String adresEmail = scanner.next();
                                 System.out.print("PESEL: ");
                                 String PESEL = scanner.next();
+
                                 boolean perissionToCreateAccount = true;
+
                                 List<Client> clients1 = service.getClients();
                                 for (Client client : clients1) {
                                     if (client instanceof Person person) {
@@ -345,6 +424,7 @@ public class Main {
                                 break;
 
                             case 2:
+
                                 Client client1 = null;
                                 boolean logOn = false;
                                 System.out.println("SIGN IN");
@@ -373,9 +453,9 @@ public class Main {
                                     System.out.println("\nLOGIN FAILED!\nPLEASE INSERT CORRECT DATA\n");
                                 }
                                 while (logOn) {
-                                    System.out.println("1) Buy ticket");
-                                    System.out.println("2) Show your tickets");
-                                    System.out.println("3) Sign out");
+                                    System.out.println("1  BUY TICKET");
+                                    System.out.println("2  SHOW YOUR TICKETS");
+                                    System.out.println("3  SIGN OUT");
 
                                     int signInClientOption = scanner.nextInt();
 
@@ -402,7 +482,6 @@ public class Main {
                                                 boolean foundFlight = false;
                                                 boolean foundDate = false;
 
-                                                List<Flight> flights = service.getFlights();
 
                                                 for (Flight flight : flights) {
                                                     if (departureAirportName.equalsIgnoreCase(flight.getRoute().getDepartureAirport().getCityName()) && arrivalAirportName.equalsIgnoreCase(flight.getRoute().getArrivalAirport().getCityName())) {
