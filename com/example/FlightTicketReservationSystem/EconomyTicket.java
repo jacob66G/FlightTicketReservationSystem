@@ -1,4 +1,4 @@
-import java.io.Serializable;
+package com.example.FlightTicketReservationSystem;
 
 public class EconomyTicket extends Ticket {
     private double price;
@@ -13,11 +13,11 @@ public class EconomyTicket extends Ticket {
     }
     @Override
     public String toString() {
-        return "Economy Ticket Information:\n" +
-                "Ticket ID: " + getTicketid() + "\n" +
+        return "Economy com.example.FlightTicketReservationSystem.Ticket Information:\n" +
+                "com.example.FlightTicketReservationSystem.Ticket ID: " + getTicketid() + "\n" +
                 "Seat Number: " + getSeatNumber() + "\n" +
                 "Price: " + getPrice() + "\n" +
-                "Flight: " + getFlight().getFlightCode() + "\n";
+                "com.example.FlightTicketReservationSystem.Flight: " + getFlight().getFlightCode() + "\n";
     }
 
 }

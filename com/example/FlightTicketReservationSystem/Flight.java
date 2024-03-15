@@ -1,3 +1,5 @@
+package com.example.FlightTicketReservationSystem;
+
 import java.io.Serializable;
 import java.util.Random;
 
@@ -56,11 +58,11 @@ public class Flight implements Serializable {
 
     @Override
     public String toString() {
-        return "Flight Information:\n" +
-                "Flight Code: " + flightCode + "\n" +
-                "Departure Airport: " + route.getDepartureAirport().getCityName() + " - " + route.getDepartureAirport().getCode() + "\n" +
-                "Arrival Airport: " + route.getArrivalAirport().getCityName() + " - " + route.getArrivalAirport().getCode() + "\n" +
-                "Plane Code: " + plane.getPlaneCode() + "\n" +
+        return "com.example.FlightTicketReservationSystem.Flight Information:\n" +
+                "com.example.FlightTicketReservationSystem.Flight Code: " + flightCode + "\n" +
+                "Departure com.example.FlightTicketReservationSystem.Airport: " + route.getDepartureAirport().getCityName() + " - " + route.getDepartureAirport().getCode() + "\n" +
+                "Arrival com.example.FlightTicketReservationSystem.Airport: " + route.getArrivalAirport().getCityName() + " - " + route.getArrivalAirport().getCode() + "\n" +
+                "com.example.FlightTicketReservationSystem.Plane.com.example.FlightTicketReservationSystem.Plane Code: " + plane.getPlaneCode() + "\n" +
                 "Departure Date and Time: " + departureDate + " " + departureTime + "\n" +
                 "Arrival Date and Time: " + arrivalDate + " " + arrivalTime + "\n" +
                 "Gate Number: " + gateNumebr + "\n";

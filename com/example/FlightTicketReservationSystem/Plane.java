@@ -1,3 +1,5 @@
+package com.example.FlightTicketReservationSystem;
+
 import java.io.Serializable;
 
 public class Plane implements Serializable {
@@ -26,8 +28,8 @@ public class Plane implements Serializable {
     }
     @Override
     public String toString() {
-        return "Plane Information:\n" +
-                "Plane Code: " + planeCode + "\n" +
+        return "com.example.FlightTicketReservationSystem.Plane.com.example.FlightTicketReservationSystem.Plane Information:\n" +
+                "com.example.FlightTicketReservationSystem.Plane.com.example.FlightTicketReservationSystem.Plane Code: " + planeCode + "\n" +
                 "Number of Seats: " + numbersOfSeats + "\n";
     }
 

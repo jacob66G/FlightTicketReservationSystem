@@ -1,6 +1,6 @@
-import java.io.Serializable;
+package com.example.FlightTicketReservationSystem;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class Person extends Client{
     private String name, surname, PESEL;
@@ -35,7 +35,7 @@ public class Person extends Client{
 
     @Override
     public String toString() {
-        return "Person Information:\n" +
+        return "com.example.FlightTicketReservationSystem.Person Information:\n" +
                 "Name: " + name + "\n" +
                 "Surname: " + surname + "\n" +
                 "PESEL: " + PESEL + "\n" +

@@ -1,3 +1,5 @@
+package com.example.FlightTicketReservationSystem;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -10,13 +12,13 @@ public class Main {
         List<Airport> airports = new ArrayList<>();
         List<Client> clients = new ArrayList<>();
 
-//        if (Serializer.checkFile()) {
-//            service = Serializer.readState();
+//        if (com.example.FlightTicketReservationSystem.Serializer.checkFile()) {
+//            service = com.example.FlightTicketReservationSystem.Serializer.readState();
 //            flights = service.getFlights();
 //            airports = service.getAirports();
 //            clients = service.getClients();
 //        }else {
-//            service = new Service();
+//            service = new com.example.FlightTicketReservationSystem.Service();
 //        }
 
 
@@ -297,14 +299,14 @@ public class Main {
 //                                            int x = scanner.nextInt();
 //                                            System.out.print("Y: ");
 //                                            int y = scanner.nextInt();
-//                                            Coordinates coordinates = new Coordinates(x, y);
+//                                            com.example.FlightTicketReservationSystem.Coordinates coordinates = new com.example.FlightTicketReservationSystem.Coordinates(x, y);
 
 
                                             System.out.println("\n----------SET AIRPORT CODE-----------");
                                             System.out.print("AIRPORT CODE: ");
                                             String airportCode = scanner.next();
 
-                                            //Airport airport = new Airport(cityName, airportCode, selectedCity.getCoordinates());
+                                            //com.example.FlightTicketReservationSystem.Airport airport = new com.example.FlightTicketReservationSystem.Airport(cityName, airportCode, selectedCity.getCoordinates());
                                             Airport airport = new Airport(selectedCity, airportCode);
                                             service.addAirport(airport);
 

@@ -1,3 +1,5 @@
+package com.example.FlightTicketReservationSystem;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -27,7 +29,7 @@ abstract class Client implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Client Information:\n");
+        sb.append("com.example.FlightTicketReservationSystem.Client Information:\n");
         sb.append("Phone Number: ").append(phoneNumber).append("\n");
         sb.append("Email: ").append(email).append("\n");
         sb.append("Tickets:\n");

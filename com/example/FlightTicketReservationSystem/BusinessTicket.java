@@ -1,4 +1,4 @@
-import java.io.Serializable;
+package com.example.FlightTicketReservationSystem;
 
 public class BusinessTicket extends Ticket {
     public BusinessTicket(Flight flight) {
@@ -12,10 +12,10 @@ public class BusinessTicket extends Ticket {
 
     @Override
     public String toString() {
-        return "Business Class Ticket Information:\n" +
-                "Ticket ID: " + getTicketid() + "\n" +
+        return "Business Class com.example.FlightTicketReservationSystem.Ticket Information:\n" +
+                "com.example.FlightTicketReservationSystem.Ticket ID: " + getTicketid() + "\n" +
                 "Seat Number: " + getSeatNumber() + "\n" +
                 "Price: " + getPrice() + "\n" +
-                "Flight: " + getFlight().getFlightCode() + "\n";
+                "com.example.FlightTicketReservationSystem.Flight: " + getFlight().getFlightCode() + "\n";
     }
 }

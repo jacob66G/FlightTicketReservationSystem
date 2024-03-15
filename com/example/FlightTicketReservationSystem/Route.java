@@ -1,3 +1,5 @@
+package com.example.FlightTicketReservationSystem;
+
 import java.io.Serializable;
 
 public class Route  implements Serializable {
@@ -37,7 +39,9 @@ public class Route  implements Serializable {
         return distance;
     }
 
-    
+    public double calculateDuration(){
+        return 0;
+    }
 
     public double getDistance() {
         return distance;
@@ -61,12 +65,12 @@ public class Route  implements Serializable {
 
     @Override
     public String toString() {
-        return "Route Information:\n" +
-                "Departure Airport: " + departureAirport.getCode() + "\n" +
-                "Arrival Airport: " + arrivalAirport.getCode() + "\n" +
+        return "com.example.FlightTicketReservationSystem.Route Information:\n" +
+                "Departure com.example.FlightTicketReservationSystem.Airport: " + departureAirport.getCode() + "\n" +
+                "Arrival com.example.FlightTicketReservationSystem.Airport: " + arrivalAirport.getCode() + "\n" +
                 "Distance: " + distance + " km\n" +
-                "Departure Runway: " + (departureRunway != null ? departureRunway.getNumber() : "Not specified") + "\n" +
-                "Arrival Runway: " + (arrivalRunway != null ? arrivalRunway.getNumber() : "Not specified") + "\n";
+                "Departure com.example.FlightTicketReservationSystem.Runway: " + (departureRunway != null ? departureRunway.getNumber() : "Not specified") + "\n" +
+                "Arrival com.example.FlightTicketReservationSystem.Runway: " + (arrivalRunway != null ? arrivalRunway.getNumber() : "Not specified") + "\n";
     }
 
 }
