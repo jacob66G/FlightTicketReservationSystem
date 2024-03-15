@@ -14,6 +14,13 @@ public class Airport implements Serializable {
         this.coordinates = coordinates;
         this.runways = new ArrayList<>();
     }
+    private AirportDataBase.City city;
+    public Airport(AirportDataBase.City city, String code) {
+        this.cityName = city.getCity();
+        this.code = code;
+        this.coordinates = city.getCoordinates();
+        this.runways = new ArrayList<>();
+    }
 
     public List<Runway> getRunways() {
         return runways;

@@ -1,6 +1,7 @@
 import java.io.Serializable;
 
 public class Route  implements Serializable {
+    private static final double R = 6371; // Średni promień Ziemi w kilometrach
     private Airport departureAirport;
     private Airport arrivalAirport;
     private double distance;
@@ -14,12 +15,29 @@ public class Route  implements Serializable {
     }
 
     public double calculateDistance(Airport departureAirport, Airport arrivalAirport){
-        double x1 = departureAirport.getCordinates().getX();
-        double y1 = departureAirport.getCordinates().getY();
-        double x2 = arrivalAirport.getCordinates().getX();
-        double y2 = arrivalAirport.getCordinates().getY();
-        return Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2));
+
+        double xDeparture = departureAirport.getCordinates().getX();
+        double yDeparture = departureAirport.getCordinates().getY();
+        double xArrival = arrivalAirport.getCordinates().getX();
+        double yArrival = arrivalAirport.getCordinates().getY();
+
+        double xDepartureRad = Math.toRadians(xDeparture);
+        double yDepartureRad = Math.toRadians(yDeparture);
+        double xArrivalRad = Math.toRadians(xArrival);
+        double yArrivalRad = Math.toRadians(yArrival);
+
+        double deltaX = xArrivalRad - xDepartureRad;
+        double deltaY = yArrivalRad - yDepartureRad;
+
+        // Wzór haversine
+        double a = Math.pow(Math.sin(deltaX / 2), 2) + Math.cos(xDepartureRad) * Math.cos(xArrivalRad) * Math.pow(Math.sin(deltaY / 2), 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        distance = R * c;
+        return distance;
     }
+
+    
 
     public double getDistance() {
         return distance;
