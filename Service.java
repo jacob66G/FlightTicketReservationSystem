@@ -1,5 +1,3 @@
-package com.example.FlightTicketReservationSystem;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +35,9 @@ public class Service implements Serializable {
     public void removeAirport(Airport airport){airports.remove(airport);}
     public List<Airport> getAirports(){ return airports; }
 
-    public void showSupportedAirports(){
-        for(Airport airport : airports){
-            System.out.println("AIRPORT CODE: "+ airport.getCode() +  "  CITY: " + airport.getCityName());
-        }
-    }
+//    public void showSupportedAirports(){
+//        for(Airport airport : airports){
+//            System.out.println("AIRPORT CODE: "+ airport.getCode() +  "  CITY: " + airport.getCityName());
+//        }
+//    }
 }

@@ -1,5 +1,3 @@
-package com.example.FlightTicketReservationSystem;
-
 public class EconomyTicket extends Ticket {
     private double price;
     public EconomyTicket(Flight flight) {
@@ -13,11 +11,11 @@ public class EconomyTicket extends Ticket {
     }
     @Override
     public String toString() {
-        return "Economy com.example.FlightTicketReservationSystem.Ticket Information:\n" +
-                "com.example.FlightTicketReservationSystem.Ticket ID: " + getTicketid() + "\n" +
+        return "Economy Ticket Information:\n" +
+                "Ticket ID: " + getTicketid() + "\n" +
                 "Seat Number: " + getSeatNumber() + "\n" +
                 "Price: " + getPrice() + "\n" +
-                "com.example.FlightTicketReservationSystem.Flight: " + getFlight().getFlightCode() + "\n";
+                "Flight: " + getFlight().getFlightCode() + "\n";
     }
 
 }

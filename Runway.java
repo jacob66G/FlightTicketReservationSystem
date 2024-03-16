@@ -1,5 +1,3 @@
-package com.example.FlightTicketReservationSystem;
-
 import java.io.Serializable;
 
 public class Runway implements Serializable {
@@ -13,6 +11,6 @@ public class Runway implements Serializable {
     }
     @Override
     public String toString() {
-        return "com.example.FlightTicketReservationSystem.Runway Number: " + number;
+        return "Runway Number: " + number;
     }
 }

@@ -1,5 +1,3 @@
-package com.example.FlightTicketReservationSystem;
-
 import java.io.Serializable;
 
 public class Route  implements Serializable {
@@ -39,8 +37,14 @@ public class Route  implements Serializable {
         return distance;
     }
 
-    public double calculateDuration(){
-        return 0;
+    public double calculateDuration(Plane plane, Airport departureAirport, Airport arrivalAirport){
+
+        double distance = calculateDistance(departureAirport, arrivalAirport) * 1000; // meters
+        double averageSpeed = plane.getAverageSpeed() * 1000 / 3600; // m/s
+
+        double averageTime = distance / averageSpeed; // sec
+
+        return averageTime;
     }
 
     public double getDistance() {
@@ -65,12 +69,12 @@ public class Route  implements Serializable {
 
     @Override
     public String toString() {
-        return "com.example.FlightTicketReservationSystem.Route Information:\n" +
-                "Departure com.example.FlightTicketReservationSystem.Airport: " + departureAirport.getCode() + "\n" +
-                "Arrival com.example.FlightTicketReservationSystem.Airport: " + arrivalAirport.getCode() + "\n" +
+        return "Route Information:\n" +
+                "Departure Airport: " + departureAirport.getCode() + "\n" +
+                "Arrival Airport: " + arrivalAirport.getCode() + "\n" +
                 "Distance: " + distance + " km\n" +
-                "Departure com.example.FlightTicketReservationSystem.Runway: " + (departureRunway != null ? departureRunway.getNumber() : "Not specified") + "\n" +
-                "Arrival com.example.FlightTicketReservationSystem.Runway: " + (arrivalRunway != null ? arrivalRunway.getNumber() : "Not specified") + "\n";
+                "Departure Runway: " + (departureRunway != null ? departureRunway.getNumber() : "Not specified") + "\n" +
+                "Arrival Runway: " + (arrivalRunway != null ? arrivalRunway.getNumber() : "Not specified") + "\n";
     }
 
 }

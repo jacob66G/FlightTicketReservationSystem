@@ -1,8 +1,5 @@
-package com.example.FlightTicketReservationSystem;
-
 import java.io.Serializable;
 import java.util.Random;
-import com.example.FlightTicketReservationSystem.Flight;
 
 public abstract class Ticket implements Serializable {
     protected int ticketid;
@@ -49,11 +46,11 @@ public abstract class Ticket implements Serializable {
 
     @Override
     public String toString() {
-        return "com.example.FlightTicketReservationSystem.Ticket.com.example.FlightTicketReservationSystem.Ticket Information:\n" +
-                "com.example.FlightTicketReservationSystem.Ticket.com.example.FlightTicketReservationSystem.Ticket ID: " + ticketid + "\n" +
+        return "Ticket.Ticket Information:\n" +
+                "Ticket.Ticket ID: " + ticketid + "\n" +
                 "Seat Number: " + seatNumber + "\n" +
                 "Price: " + price + "\n" +
-                "com.example.FlightTicketReservationSystem.Flight: " + flight.getFlightCode() + "\n";
+                "Flight: " + flight.getFlightCode() + "\n";
     }
 
 }

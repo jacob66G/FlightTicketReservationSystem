@@ -1,5 +1,3 @@
-package com.example.FlightTicketReservationSystem;
-
 import java.io.*;
 
 public class Serializer {
@@ -8,7 +6,8 @@ public class Serializer {
     public static void saveState(Service service) {
         try (FileOutputStream fileOutput = new FileOutputStream(SERIALIZATION_FILE);
              ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput)) {
-            objectOutput.writeObject(service);
+             objectOutput.writeObject(service);
+             System.out.println("DATA SAVED");
         } catch (IOException e) {
             e.printStackTrace();
         }

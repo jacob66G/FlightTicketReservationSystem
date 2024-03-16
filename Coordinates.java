@@ -1,5 +1,3 @@
-package com.example.FlightTicketReservationSystem;
-
 import java.io.Serializable;
 
 public class Coordinates implements Serializable {
@@ -28,6 +26,6 @@ public class Coordinates implements Serializable {
 
     @Override
     public String toString() {
-        return "com.example.FlightTicketReservationSystem.Coordinates (X, Y): (" + x + ", " + y + ")";
+        return "Coordinates (X, Y): (" + x + ", " + y + ")";
     }
 }

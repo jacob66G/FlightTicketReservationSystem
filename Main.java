@@ -1,6 +1,7 @@
-package com.example.FlightTicketReservationSystem;
-
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 public class Main {
@@ -12,15 +13,6 @@ public class Main {
         List<Airport> airports = new ArrayList<>();
         List<Client> clients = new ArrayList<>();
 
-//        if (com.example.FlightTicketReservationSystem.Serializer.checkFile()) {
-//            service = com.example.FlightTicketReservationSystem.Serializer.readState();
-//            flights = service.getFlights();
-//            airports = service.getAirports();
-//            clients = service.getClients();
-//        }else {
-//            service = new com.example.FlightTicketReservationSystem.Service();
-//        }
-
 
         try{
             service = Serializer.readState();
@@ -29,7 +21,7 @@ public class Main {
             clients = service.getClients();
         } catch (IOException e) {
         // Obsługa wyjątku IOException (np. plik jest pusty)
-        System.out.println("Plik jest pusty: " + e.getMessage());
+        System.out.println("FILE STAN: " + e.getMessage());
     }
 
         boolean exit = true;
@@ -86,9 +78,8 @@ public class Main {
                                             Runway departureRunnway = null;
 
                                             System.out.println("----------DEPARTURE AIRPORT INFORMATIONS----------\n");
-                                            System.out.println("CHOOSE DEPARTURE AIRPORT");
+                                            System.out.println("CHOOSE DEPARTURE AIRPORT\n");
 
-                                            // service.showSupportedAirports();
                                             for (Airport airport : airports) {
                                                 System.out.println(airport.displayBasicInf());
                                             }
@@ -114,6 +105,7 @@ public class Main {
                                                 }
                                                 System.out.print("\nCHOOSE RUNNWAY CODE: ");
                                                 String departureRunnwayCode = scanner.next();
+
                                                 //Zrobir funkcje
                                                 for (Runway runway : departureRunnways) {
                                                     if (runway.getNumber().equals(departureRunnwayCode)) {
@@ -135,9 +127,8 @@ public class Main {
                                             Runway arrivalRunnway = null;
 
                                             System.out.println("\n----------ARRIVAL AIRPORT INFORMATIONS----------\n");
-                                            System.out.println("CHOOSE ARRIVAL AIRPORT");
+                                            System.out.println("CHOOSE ARRIVAL AIRPORT\n");
 
-                                            //service.showSupportedAirports();
                                             for (Airport airport : airports) {
                                                 if (!airport.getCode().equals(departureAirportCode))
                                                     System.out.println(airport.displayBasicInf());
@@ -163,7 +154,7 @@ public class Main {
                                                     System.out.println(runway);
                                                 }
 
-                                                System.out.print("CHOOSE RUNNWAY CODE: ");
+                                                System.out.print("\nCHOOSE RUNNWAY CODE: ");
                                                 String arrivalRunnwayCode = scanner.next();
                                                 //zrobic funkcje
                                                 for (Runway runway : arrivalRunnways) {
@@ -176,7 +167,6 @@ public class Main {
                                                     break;
                                                 }
 
-                                                System.out.println("------------------------------\n");
 
                                             } else {
                                                 System.out.println("AIRPORT WITH THIS CODE DOES NOT EXIST!");
@@ -188,39 +178,94 @@ public class Main {
 
                                             //--------------------------------------------------------------------------------PLANE
                                             System.out.println("----------PLANE INFORMATIONS----------\n");
+                                            Plane plane =  null;
+                                            System.out.println("CHOOSE PLANE TYPE: ");
+                                            System.out.println("1  LIGHT JET\n2  JUMBO JET\n3  BUSINESS JET");
+
+                                            int planeType;
+
+                                            while (true) {
+                                                planeType = scanner.nextInt();
+                                                if (planeType >= 1 && planeType <= 3) {
+                                                    break;
+                                                } else {
+                                                    System.out.println("WRONG OPTION!");
+                                                }
+                                            }
+
                                             System.out.println("SET PLANE CODE");
                                             System.out.print("PLANE CODE: ");
                                             String planeCode = scanner.next();
 
-                                            System.out.println("ENTER NUMBER OF AVAILABLE SEATS");
+                                            System.out.println("\nENTER NUMBER OF AVAILABLE SEATS");
                                             System.out.print("NUMBER OD SEATS: ");
                                             int numberOfSeats = scanner.nextInt();
-                                            System.out.println("------------------------------\n");
 
-                                            Plane newPlane = new Plane(planeCode, numberOfSeats);
+                                            if(planeType == 1){
+                                                plane = new LightJet(planeCode, numberOfSeats);
+                                            }else if (planeType == 2){
+                                                plane = new JumboJet(planeCode, numberOfSeats);
+                                            }else {
+                                                plane = new BusinessJet(planeCode, numberOfSeats);
+                                            }
+
                                             //---------------------------------------------------------------------------------DATE
                                             System.out.println("\n----------DATE INFORMATIONS----------");
-                                            System.out.println("SET DEPARTURE DATE (yyyy-MM-dd)");
-                                            String departureDate = scanner.next();
-                                            System.out.println("SET DEPARTURE TIME OF TAKE-OFF (HH:mm)");
-                                            String departureTime = scanner.next();
 
-                                            //metoda liczaca czas.
-                                            System.out.println("\nSET ARRIVAL DATE (yyyy-MM-dd)");
-                                            String arrivalDate = scanner.next();
-                                            System.out.println("SET ARRIVAL TIME OF LANDING (HH:mm)");
-                                            String arrivalTime = scanner.next();
+                                            System.out.println("SET DEPARTURE DATE (yyyy-MM-dd)");
+                                            LocalDate departureDate = LocalDate.parse(scanner.next());
+
+                                            System.out.println("SET DEPARTURE TIME OF TAKE-OFF (HH:mm)");
+                                            LocalTime departureTime = LocalTime.parse(scanner.next());
+
+
+                                            LocalDateTime departureDateTime = LocalDateTime.of(departureDate, departureTime);
+                                            LocalDateTime arrivalDateTime = null;
+                                            LocalDateTime predictedArrivalDate = departureDateTime.plusSeconds((long) newRoute.calculateDuration(plane, departureAirport, arrivalAirport));
+
+                                            System.out.println("PREDICTED TIME: " + predictedArrivalDate);
+
+                                            while (true){
+
+                                                System.out.println("DO YOU ACCEPT PREDICTED TIME? (YES/NO)");
+                                                String acceptTime = scanner.next();
+
+                                                if(acceptTime.equalsIgnoreCase("YES")){
+
+                                                    arrivalDateTime = predictedArrivalDate;
+                                                    break;
+
+                                                } else if (acceptTime.equalsIgnoreCase("NO")) {
+
+                                                    System.out.println("\nSET ARRIVAL DATE (yyyy-MM-dd)");
+                                                    LocalDate arrivalDate = LocalDate.parse(scanner.next());
+                                                    System.out.println("SET ARRIVAL TIME OF LANDING (HH:mm)");
+                                                    LocalTime arrivalTime = LocalTime.parse(scanner.next());
+
+                                                    arrivalDateTime = LocalDateTime.of(arrivalDate, arrivalTime);
+                                                    break;
+                                                }
+                                                else {
+                                                    System.out.println("WRONG OPTION");
+                                                }
+                                            }
+
+
                                             System.out.println("------------------------------\n");
 
                                             //--------------------------------------------------------------------------GATE NUMBER
-                                            System.out.println("\nENTER NUMBER OF GATES:");
-                                            System.out.print("GATE NUMBERS:");
+                                            System.out.println("\nENTER NUMBER OF GATES");
+                                            System.out.print("GATE NUMBERS: ");
                                             String gateNumber = scanner.next();
 
 
-                                            System.out.println("NEW FLIGHT IS ADDED");
-                                            Flight newFlight = new Flight(newRoute, newPlane, departureDate, arrivalDate, departureTime, arrivalTime, gateNumber);
-                                            service.addFlight(newFlight);
+                                            System.out.println("\nNEW FLIGHT IS ADDED\n");
+
+
+                                            Flight newFlight = new Flight(newRoute, plane, departureDateTime, arrivalDateTime, gateNumber);
+                                            flights.add(newFlight);
+
+                                            Serializer.saveState(service);
 
                                             break;
 
@@ -245,7 +290,7 @@ public class Main {
 
                                     for (Airport airport : airports) {
                                         // System.out.println("AIRPORT CODE: " + airport.getCode() + "CITY: " + airport.getCityName());
-                                        System.out.println(airport);
+                                        System.out.println(airport.displayBasicInf());
                                     }
                                     if (airports.isEmpty()) {
                                         System.out.println("ANY AIRPORT IS AVAILABLE");
@@ -275,18 +320,19 @@ public class Main {
 
                                             //sprawdzic czy jest
 
-                                            List<AirportDataBase.City> cityList = airportLocation.get(countryName);
+                                            System.out.println("\n----------SET AIRPORT CITY----------");
+                                            List<AirportDataBase.City> cityList = airportLocation.get(countryName.toUpperCase());
 
                                             for (AirportDataBase.City city : cityList) {
                                                 System.out.println(city.getCity());
                                             }
-                                            System.out.println("\n----------SET AIRPORT CITY----------");
+
                                             AirportDataBase.City selectedCity = null;
-                                            System.out.print("CITY: ");
+                                            System.out.print("\nCITY: ");
                                             String cityName = scanner.next();
 
                                             for (AirportDataBase.City city : cityList) {
-                                                if (city.getCity().equals(cityName)) {
+                                                if (city.getCity().equals(cityName.toUpperCase())) {
                                                     selectedCity = city;
                                                     break;
                                                 }
@@ -294,26 +340,20 @@ public class Main {
 
                                             //sprawdzic czy jest
 
-//                                            System.out.println("-------SET AIRPORT COORDINATES-------");
-//                                            System.out.print("X: ");
-//                                            int x = scanner.nextInt();
-//                                            System.out.print("Y: ");
-//                                            int y = scanner.nextInt();
-//                                            com.example.FlightTicketReservationSystem.Coordinates coordinates = new com.example.FlightTicketReservationSystem.Coordinates(x, y);
-
 
                                             System.out.println("\n----------SET AIRPORT CODE-----------");
                                             System.out.print("AIRPORT CODE: ");
                                             String airportCode = scanner.next();
 
-                                            //com.example.FlightTicketReservationSystem.Airport airport = new com.example.FlightTicketReservationSystem.Airport(cityName, airportCode, selectedCity.getCoordinates());
                                             Airport airport = new Airport(selectedCity, airportCode);
-                                            service.addAirport(airport);
+                                            //service.addAirport(airport);
+                                            airports.add(airport);
 
                                             System.out.println("\n---SET NUMBER OF AVAILABLE RUNNWAYS---");
 
-                                            System.out.print("NUMBER OF RUNNWAYS: ");
+                                            System.out.print("NUMBER OF RUNNWAYS: \n");
                                             int numberOfrunnways = scanner.nextInt();
+
                                             for (int n = 1; n <= numberOfrunnways; n++) {
                                                 System.out.print(n + " RUNNWAY CODE: ");
                                                 String runnwayCode = scanner.next();
@@ -321,11 +361,15 @@ public class Main {
                                                 airport.addRunway(runway);
 
                                             }
-                                            System.out.println("\nA NEW AIRPORT HAS BEEN ADDED");
+                                            System.out.println("\nA NEW AIRPORT HAS BEEN ADDED\n");
+                                            Serializer.saveState(service);
                                             break;
                                         case 2:
 
-                                            service.showSupportedAirports();
+                                            for(Airport airport1 : airports){
+                                                System.out.println(airport1.displayBasicInf());
+                                            }
+                                            
                                             System.out.println("1  DELETE AIRPORT BY AIRPORT CODE");
                                             System.out.println("2  GO BACK");
                                             int option = scanner.nextInt();
@@ -363,6 +407,9 @@ public class Main {
                                     String deleteData = scanner.next();
                                     if (deleteData.equalsIgnoreCase("yes")) {
                                         Serializer.clearData();
+                                        airports.clear();
+                                        flights.clear();
+                                        clients.clear();
                                         break;
                                     } else if (deleteData.equalsIgnoreCase("no")) {
                                         break;

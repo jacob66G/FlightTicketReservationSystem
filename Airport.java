@@ -1,5 +1,3 @@
-package com.example.FlightTicketReservationSystem;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,9 +58,9 @@ public class Airport implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("com.example.FlightTicketReservationSystem.Airport Code: ").append(code).append("\n");
+        sb.append("Airport Code: ").append(code).append("\n");
         sb.append("City Name: ").append(cityName).append("\n");
-        sb.append("com.example.FlightTicketReservationSystem.Coordinates: ").append(coordinates).append("\n");
+        sb.append("Coordinates: ").append(coordinates).append("\n");
         sb.append("Number of Gates: ").append(numberOfgates).append("\n");
         sb.append("Runways: \n");
         for (Runway runway : runways) {
@@ -73,7 +71,7 @@ public class Airport implements Serializable {
 
     public String displayBasicInf(){
         StringBuilder sb = new StringBuilder();
-        sb.append("com.example.FlightTicketReservationSystem.Airport Code: ").append(code).append("\n");
+        sb.append("Airport Code: ").append(code).append("\n");
         sb.append("City Name: ").append(cityName).append("\n");
         return sb.toString();
     }

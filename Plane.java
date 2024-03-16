@@ -1,11 +1,9 @@
-package com.example.FlightTicketReservationSystem;
-
 import java.io.Serializable;
 
 public class Plane implements Serializable {
     private String planeCode;
     private int numbersOfSeats;
-
+    private double averageSpeed;
     public Plane(String planeCode, int numbersOfSeats) {
         this.planeCode = planeCode;
         this.numbersOfSeats = numbersOfSeats;
@@ -26,10 +24,14 @@ public class Plane implements Serializable {
     public void setNumbersOfSeats(int numbersOfSeats) {
         this.numbersOfSeats = numbersOfSeats;
     }
+
+    public double getAverageSpeed(){
+        return averageSpeed;
+    }
     @Override
     public String toString() {
-        return "com.example.FlightTicketReservationSystem.Plane.com.example.FlightTicketReservationSystem.Plane Information:\n" +
-                "com.example.FlightTicketReservationSystem.Plane.com.example.FlightTicketReservationSystem.Plane Code: " + planeCode + "\n" +
+        return "Plane.Plane Information:\n" +
+                "Plane.Plane Code: " + planeCode + "\n" +
                 "Number of Seats: " + numbersOfSeats + "\n";
     }
 

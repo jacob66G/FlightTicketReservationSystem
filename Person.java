@@ -1,5 +1,3 @@
-package com.example.FlightTicketReservationSystem;
-
 import java.util.ArrayList;
 
 public class Person extends Client{
@@ -35,7 +33,7 @@ public class Person extends Client{
 
     @Override
     public String toString() {
-        return "com.example.FlightTicketReservationSystem.Person Information:\n" +
+        return "Person Information:\n" +
                 "Name: " + name + "\n" +
                 "Surname: " + surname + "\n" +
                 "PESEL: " + PESEL + "\n" +
