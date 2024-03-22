@@ -1,3 +1,10 @@
+package Route;
+
+import Airport.Airport;
+import Plane.Plane;
+import Runway.Runway;
+import Coordinates.Coordinates;
+
 import java.io.Serializable;
 
 public class Route  implements Serializable {
@@ -16,10 +23,10 @@ public class Route  implements Serializable {
 
     public double calculateDistance(Airport departureAirport, Airport arrivalAirport){
 
-        double xDeparture = departureAirport.getCordinates().getX();
-        double yDeparture = departureAirport.getCordinates().getY();
-        double xArrival = arrivalAirport.getCordinates().getX();
-        double yArrival = arrivalAirport.getCordinates().getY();
+        double xDeparture = departureAirport.getLocation().getCoordinates().getX();
+        double yDeparture = departureAirport.getLocation().getCoordinates().getY();
+        double xArrival = arrivalAirport.getLocation().getCoordinates().getX();
+        double yArrival = arrivalAirport.getLocation().getCoordinates().getY();
 
         double xDepartureRad = Math.toRadians(xDeparture);
         double yDepartureRad = Math.toRadians(yDeparture);
@@ -44,7 +51,7 @@ public class Route  implements Serializable {
 
         double averageTime = distance / averageSpeed; // sec
 
-        return averageTime;
+        return averageTime + 15 * 60;
     }
 
     public double getDistance() {
@@ -69,12 +76,12 @@ public class Route  implements Serializable {
 
     @Override
     public String toString() {
-        return "Route Information:\n" +
-                "Departure Airport: " + departureAirport.getCode() + "\n" +
-                "Arrival Airport: " + arrivalAirport.getCode() + "\n" +
+        return "Route.Route Information:\n" +
+                "Departure Airport.Airport: " + departureAirport.getCode() + "\n" +
+                "Arrival Airport.Airport: " + arrivalAirport.getCode() + "\n" +
                 "Distance: " + distance + " km\n" +
-                "Departure Runway: " + (departureRunway != null ? departureRunway.getNumber() : "Not specified") + "\n" +
-                "Arrival Runway: " + (arrivalRunway != null ? arrivalRunway.getNumber() : "Not specified") + "\n";
+                "Departure Runway.Runway: " + (departureRunway != null ? departureRunway.getNumber() : "Not specified") + "\n" +
+                "Arrival Runway.Runway: " + (arrivalRunway != null ? arrivalRunway.getNumber() : "Not specified") + "\n";
     }
 
 }

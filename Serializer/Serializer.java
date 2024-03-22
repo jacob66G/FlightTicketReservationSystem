@@ -1,3 +1,7 @@
+package Serializer;
+
+import Service.Service;
+
 import java.io.*;
 
 public class Serializer {
@@ -25,7 +29,7 @@ public class Serializer {
         if (file.exists()) {
             if (file.delete()) {
                 try {
-                    file.createNewFile(); // Recreate the file
+                    file.createNewFile();
                     System.out.println("Data has been cleared.");
                 } catch (IOException e) {
                     System.out.println("Failed to recreate the file: " + e.getMessage());
@@ -37,11 +41,4 @@ public class Serializer {
             System.out.println("File does not exist.");
         }
     }
-
-    public static boolean checkFile() {
-        File file = new File(SERIALIZATION_FILE);
-        return file.exists() && file.length() != 0;
-    }
-
-
 }

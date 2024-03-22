@@ -1,3 +1,5 @@
+package Runway;
+
 import java.io.Serializable;
 
 public class Runway implements Serializable {
@@ -11,6 +13,6 @@ public class Runway implements Serializable {
     }
     @Override
     public String toString() {
-        return "Runway Number: " + number;
+        return "RUNWAY CODE: " + number;
     }
 }

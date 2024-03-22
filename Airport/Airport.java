@@ -1,27 +1,30 @@
+package Airport;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import Runway.Runway;
+import Coordinates.Coordinates;
 import java.util.List;
 
 public class Airport implements Serializable {
-    private String code, cityName;
+    private String code;
     private List<Runway> runways;
-    private Coordinates coordinates;
     private int numberOfgates;
+    private Location location;
 
-    public Airport(String cityName, String code, Coordinates coordinates) {
-        this.cityName =cityName;
+    public Airport(Location location, String code) {
+        this.location = location;
         this.code = code;
-        this.coordinates = coordinates;
-        this.runways = new ArrayList<>();
-    }
-    private AirportDataBase.City city;
-    public Airport(AirportDataBase.City city, String code) {
-        this.cityName = city.getCity();
-        this.code = code;
-        this.coordinates = city.getCoordinates();
         this.runways = new ArrayList<>();
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
     public List<Runway> getRunways() {
         return runways;
     }
@@ -35,14 +38,6 @@ public class Airport implements Serializable {
         this.code = code;
     }
 
-    public Coordinates getCordinates() {
-        return coordinates;
-    }
-
-    public void setCordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
-    }
-
     public int getNumberOfgates() {
         return numberOfgates;
     }
@@ -51,18 +46,23 @@ public class Airport implements Serializable {
         this.numberOfgates = numberOfgates;
     }
 
-    public String getCityName() {
-        return cityName;
+
+    public Runway getRunnwayByCode(String code){
+        for(Runway runway : runways){
+            if (runway.getNumber().equals(code)) return runway;
+        }
+        return null;
     }
+
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Airport Code: ").append(code).append("\n");
-        sb.append("City Name: ").append(cityName).append("\n");
-        sb.append("Coordinates: ").append(coordinates).append("\n");
-        sb.append("Number of Gates: ").append(numberOfgates).append("\n");
-        sb.append("Runways: \n");
+        sb.append("AIRPORT CODE: ").append(code).append("\n");
+        sb.append("LOCATION: ").append(location.getCountryName() + " " +location.getCityName()).append("\n");
+        sb.append("COORDINATES: ").append(location.getCoordinates()).append("\n");
+        sb.append("NUMBER OF GATES: ").append(numberOfgates).append("\n");
+        sb.append("RUNNWAYS: \n");
         for (Runway runway : runways) {
             sb.append("  - ").append(runway).append("\n");
         }
@@ -71,8 +71,9 @@ public class Airport implements Serializable {
 
     public String displayBasicInf(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Airport Code: ").append(code).append("\n");
-        sb.append("City Name: ").append(cityName).append("\n");
+        sb.append("LOCATION: ").append(location.getCountryName() + " " +location.getCityName()).append("\n");
+        sb.append("AIRPORT CODE: ").append(code).append("\n");
+
         return sb.toString();
     }
 }

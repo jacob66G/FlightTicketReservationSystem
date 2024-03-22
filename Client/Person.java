@@ -1,8 +1,10 @@
+package Client;
+
 import java.util.ArrayList;
 
 public class Person extends Client{
     private String name, surname, PESEL;
-    public Person(int phoneNumber, String email, String name, String surname, String PESEL) {
+    public Person(String phoneNumber, String email, String name, String surname, String PESEL) {
         super(phoneNumber, email);
         this.name = name;
         this.surname = surname;
@@ -24,7 +26,7 @@ public class Person extends Client{
     public String getPESEL() {
         return PESEL;
     }
-    public int getPhoneNumber(){
+    public String getPhoneNumber(){
         return phoneNumber;
     }
     public String getEmail(){
@@ -33,7 +35,7 @@ public class Person extends Client{
 
     @Override
     public String toString() {
-        return "Person Information:\n" +
+        return "Client.Person Information:\n" +
                 "Name: " + name + "\n" +
                 "Surname: " + surname + "\n" +
                 "PESEL: " + PESEL + "\n" +

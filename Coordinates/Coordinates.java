@@ -1,3 +1,5 @@
+package Coordinates;
+
 import java.io.Serializable;
 
 public class Coordinates implements Serializable {
@@ -26,6 +28,6 @@ public class Coordinates implements Serializable {
 
     @Override
     public String toString() {
-        return "Coordinates (X, Y): (" + x + ", " + y + ")";
+        return "Coordinates.Coordinates (X, Y): (" + x + ", " + y + ")";
     }
 }

@@ -1,3 +1,5 @@
+package Plane;
+
 public class JumboJet extends Plane {
     private final double averageSpeed = 900; //km/h
     public JumboJet(String planeCode, int numbersOfSeats) {
@@ -7,4 +9,5 @@ public class JumboJet extends Plane {
     public double getAverageSpeed(){
         return averageSpeed;
     }
+
 }
